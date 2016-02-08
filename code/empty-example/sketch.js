@@ -1,16 +1,65 @@
-// Learning Processing
-// Daniel Shiffman
-// http://www.learningprocessing.com
-
-// Example 1-1: stroke and fill
+// rotation
+var objRotateX = 0;
+var objRotateY = 5;
+var objRotateZ = 0;
 
 function setup() {
-  createCanvas(480, 270);
-  stroke(0);
-  fill(0,0,255);
+   createCanvas(windowWidth, windowHeight, WEBGL);
+
+
 }
 
 function draw() {
-  background(255,0,0);
-  rect(mouseX,mouseY,75,100);
+  background(25,81,22,1);
+  doAnimate();
+  objRotate();
+  drawModel();
+
+
+
+}
+
+function drawModel() {
+  var spikeCount = 1000;
+  var spikeMaxLen = height/10;
+  var groupRadius = (height/2) - (height/10);
+
+
+
+  basicMaterial(32);
+
+  for (var s=0; s < spikeCount; s++) {
+
+    var noiseCoord = s;
+    var rnd = lerp(-1,1,noise(noiseCoord));
+
+
+    // translate
+    rotateY(PI*rnd);
+    rotateZ(PI*rnd);
+    translate(groupRadius,0,0);
+
+    plane(rnd * spikeMaxLen,0.5);
+
+    //reset translation
+    translate(-groupRadius,0,0);
+    rotateY(-(PI*rnd));
+    rotateZ(-(PI*rnd));
+
+  }
+
+}
+
+function doAnimate() {
+  // increment animation variables
+  objRotateX -= 1;
+  objRotateY -= 0;
+  objRotateZ -= 0;
+
+}
+
+function objRotate() {
+  rotateX(radians(objRotateX));
+  rotateY(radians(objRotateY));
+  rotateZ(radians(objRotateZ));
 }
